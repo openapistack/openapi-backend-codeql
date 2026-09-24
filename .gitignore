@@ -1,0 +1,6 @@
+.codeql/
+*.testproj/
+*.actual
+db/
+results.sarif
+node_modules/
