@@ -1,0 +1,2 @@
+query: src/MissingSecurityHandler/MissingSecurityHandler.ql
+postprocess: utils/InlineExpectationsTestQuery.ql

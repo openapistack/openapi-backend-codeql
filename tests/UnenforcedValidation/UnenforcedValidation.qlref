@@ -1,0 +1,2 @@
+query: src/UnenforcedValidation/UnenforcedValidation.ql
+postprocess: utils/InlineExpectationsTestQuery.ql

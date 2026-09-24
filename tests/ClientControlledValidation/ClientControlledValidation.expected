@@ -1,0 +1,21 @@
+#select
+| test.js:6:61:6:76 | !isInternal(req) | test.js:5:29:5:49 | req.get ... ernal') | test.js:6:61:6:76 | !isInternal(req) | Whether this request gets validated depends on $@, which the client controls. | test.js:5:29:5:49 | req.get ... ernal') | request data |
+| test.js:10:12:10:16 | false | test.js:9:7:9:33 | event.q ... ameters | test.js:10:12:10:16 | false | Whether this request gets validated depends on $@, which the client controls. | test.js:9:7:9:33 | event.q ... ameters | request data |
+| test.js:12:10:12:13 | true | test.js:9:7:9:33 | event.q ... ameters | test.js:12:10:12:13 | true | Whether this request gets validated depends on $@, which the client controls. | test.js:9:7:9:33 | event.q ... ameters | request data |
+edges
+| test.js:5:29:5:49 | req.get ... ernal') | test.js:5:29:5:59 | req.get ... = 'yes' | provenance | Config |
+| test.js:5:29:5:59 | req.get ... = 'yes' | test.js:6:62:6:76 | isInternal(req) | provenance |  |
+| test.js:6:62:6:76 | isInternal(req) | test.js:6:61:6:76 | !isInternal(req) | provenance | Config |
+| test.js:9:7:9:33 | event.q ... ameters | test.js:9:7:9:39 | event.q ... s.debug | provenance |  |
+| test.js:9:7:9:39 | event.q ... s.debug | test.js:10:12:10:16 | false | provenance | Config |
+| test.js:9:7:9:39 | event.q ... s.debug | test.js:12:10:12:13 | true | provenance | Config |
+nodes
+| test.js:5:29:5:49 | req.get ... ernal') | semmle.label | req.get ... ernal') |
+| test.js:5:29:5:59 | req.get ... = 'yes' | semmle.label | req.get ... = 'yes' |
+| test.js:6:61:6:76 | !isInternal(req) | semmle.label | !isInternal(req) |
+| test.js:6:62:6:76 | isInternal(req) | semmle.label | isInternal(req) |
+| test.js:9:7:9:33 | event.q ... ameters | semmle.label | event.q ... ameters |
+| test.js:9:7:9:39 | event.q ... s.debug | semmle.label | event.q ... s.debug |
+| test.js:10:12:10:16 | false | semmle.label | false |
+| test.js:12:10:12:13 | true | semmle.label | true |
+subpaths

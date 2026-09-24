@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CODEQL_VERSION: 2.27.1
+
+jobs:
+  unit-tests:
+    name: Compile and unit test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./.github/actions/setup-codeql
+        with:
+          version: ${{ env.CODEQL_VERSION }}
+
+      - name: Compile queries (warnings are errors)
+        run: codeql query compile --check-only --warnings=error queries/src
+
+      - name: Run tests and examples
+        run: codeql test run --threads=0 tests examples
+
+      # `codeql test run --learn` writes inline expectation failures into .expected files, where they
+      # would pass from then on. A committed .expected file must never contain a testFailures section.
+      - name: Check no test failures are baked into .expected files
+        run: |
+          baked=$(grep -l '^testFailures' $(find tests examples -name '*.expected') || true)
+          if [ -n "$baked" ]; then
+            for file in $baked; do echo "::error file=$file::contains a testFailures section"; done
+            exit 1
+          fi
+
+  examples:
+    name: Analyze examples end to end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./.github/actions/setup-codeql
+        with:
+          version: ${{ env.CODEQL_VERSION }}
+
+      - name: Create database from examples/
+        run: codeql database create "$RUNNER_TEMP/db" --language=javascript-typescript --source-root=examples
+
+      # Same as a user's setup: the query suite plus the models pack, next to a built-in query
+      - name: Analyze with openapi-backend queries and models
+        run: |
+          codeql database analyze "$RUNNER_TEMP/db" \
+            queries/openapi-backend.qls \
+            codeql/javascript-queries:Security/CWE-089/SqlInjection.ql \
+            --model-packs=openapistack/openapi-backend-models \
+            --additional-packs=. \
+            --format=sarif-latest \
+            --output=results.sarif
+
+      - name: Verify alerts match the // $ Alert markers
+        run: node scripts/verify-sarif.mjs results.sarif examples
+
+      # Control: without the models pack, the built-in query must miss the SQL injection example.
+      # If it starts finding it on its own, upstream CodeQL has learned openapi-backend.
+      - name: Check the models pack is what finds the SQL injection
+        run: |
+          codeql database analyze "$RUNNER_TEMP/db" \
+            codeql/javascript-queries:Security/CWE-089/SqlInjection.ql \
+            --rerun --format=sarif-latest --output=without-models.sarif
+          count=$(jq '[.runs[].results[]] | length' without-models.sarif)
+          echo "js/sql-injection alerts without models: $count"
+          if [ "$count" -ne 0 ]; then
+            echo "::warning::js/sql-injection finds the example without the models pack. Is the pack still needed?"
+          fi
+
+      - name: Upload SARIF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: examples-sarif
+          path: '*.sarif'

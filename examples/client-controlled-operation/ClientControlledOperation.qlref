@@ -1,0 +1,2 @@
+query: src/ClientControlledOperation/ClientControlledOperation.ql
+postprocess: utils/InlineExpectationsTestQuery.ql

@@ -1,0 +1,9 @@
+name: openapistack/openapi-backend-tests
+version: 0.0.0
+extractor: javascript
+tests: .
+dependencies:
+  codeql/javascript-all: "*"
+  codeql/javascript-queries: "*"
+  openapistack/openapi-backend-queries: "*"
+  openapistack/openapi-backend-models: "*"

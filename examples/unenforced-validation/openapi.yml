@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: Users API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      responses:
+        '200': { description: ok }
+    post:
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [name]
+              properties:
+                name: { type: string, maxLength: 64 }
+                role: { type: string, enum: [user] }
+      responses:
+        '201': { description: created }

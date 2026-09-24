@@ -1,0 +1,42 @@
+name: Set up CodeQL
+description: Installs the CodeQL CLI and the dependencies of every pack in this repository.
+inputs:
+  version:
+    description: CodeQL CLI version
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Cache CodeQL CLI
+      id: cache-cli
+      uses: actions/cache@v4
+      with:
+        path: ${{ runner.temp }}/codeql
+        key: codeql-cli-${{ runner.os }}-${{ inputs.version }}
+
+    - name: Download CodeQL CLI
+      if: steps.cache-cli.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        curl -fsSL -o "$RUNNER_TEMP/codeql.zip" \
+          "https://github.com/github/codeql-cli-binaries/releases/download/v${{ inputs.version }}/codeql-linux64.zip"
+        unzip -q "$RUNNER_TEMP/codeql.zip" -d "$RUNNER_TEMP"
+
+    - name: Add CodeQL to PATH
+      shell: bash
+      run: |
+        echo "$RUNNER_TEMP/codeql" >> "$GITHUB_PATH"
+        "$RUNNER_TEMP/codeql/codeql" version
+
+    - name: Cache CodeQL packs
+      uses: actions/cache@v4
+      with:
+        path: ~/.codeql/packages
+        key: codeql-packs-${{ inputs.version }}-${{ hashFiles('**/codeql-pack.lock.yml') }}
+
+    - name: Install pack dependencies
+      shell: bash
+      run: |
+        for pack in queries models tests examples; do
+          codeql pack install "$pack"
+        done

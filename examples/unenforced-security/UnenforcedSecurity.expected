@@ -1,0 +1,2 @@
+| vulnerable.js:14:14:14:50 | (c) =>  ... ams.id) | This handler for 'getUser' runs even when the request fails its security requirements, because $@ has no unauthorizedHandler and strict mode is off. | vulnerable.js:7:13:17:2 | new Ope ...   },\\n}) | This OpenAPIBackend instance |
+| vulnerable.js:15:17:15:56 | (c) =>  ... ams.id) | This handler for 'deleteUser' runs even when the request fails its security requirements, because $@ has no unauthorizedHandler and strict mode is off. | vulnerable.js:7:13:17:2 | new Ope ...   },\\n}) | This OpenAPIBackend instance |

@@ -1,0 +1,18 @@
+#select
+| vulnerable.js:14:29:14:82 | `SELECT ... ms.id}` | vulnerable.js:14:62:14:70 | c.request | vulnerable.js:14:29:14:82 | `SELECT ... ms.id}` | This query string depends on a $@. | vulnerable.js:14:62:14:70 | c.request | user-provided value |
+| vulnerable.js:20:19:20:61 | `SELECT ... name}'` | vulnerable.js:19:20:19:28 | c.request | vulnerable.js:20:19:20:61 | `SELECT ... name}'` | This query string depends on a $@. | vulnerable.js:19:20:19:28 | c.request | user-provided value |
+edges
+| vulnerable.js:14:62:14:70 | c.request | vulnerable.js:14:29:14:82 | `SELECT ... ms.id}` | provenance |  |
+| vulnerable.js:19:9:19:16 | { name } | vulnerable.js:19:11:19:14 | name | provenance |  |
+| vulnerable.js:19:11:19:14 | name | vulnerable.js:20:55:20:58 | name | provenance |  |
+| vulnerable.js:19:20:19:28 | c.request | vulnerable.js:19:9:19:16 | { name } | provenance |  |
+| vulnerable.js:20:55:20:58 | name | vulnerable.js:20:19:20:61 | `SELECT ... name}'` | provenance |  |
+nodes
+| vulnerable.js:14:29:14:82 | `SELECT ... ms.id}` | semmle.label | `SELECT ... ms.id}` |
+| vulnerable.js:14:62:14:70 | c.request | semmle.label | c.request |
+| vulnerable.js:19:9:19:16 | { name } | semmle.label | { name } |
+| vulnerable.js:19:11:19:14 | name | semmle.label | name |
+| vulnerable.js:19:20:19:28 | c.request | semmle.label | c.request |
+| vulnerable.js:20:19:20:61 | `SELECT ... name}'` | semmle.label | `SELECT ... name}'` |
+| vulnerable.js:20:55:20:58 | name | semmle.label | name |
+subpaths

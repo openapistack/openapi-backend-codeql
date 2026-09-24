@@ -1,0 +1,19 @@
+#select
+| vulnerable.js:7:25:7:58 | !req.he ... quest'] | vulnerable.js:7:26:7:36 | req.headers | vulnerable.js:7:25:7:58 | !req.he ... quest'] | Whether this request gets validated depends on $@, which the client controls. | vulnerable.js:7:26:7:36 | req.headers | request data |
+| vulnerable.js:13:20:13:51 | c.reque ...  'true' | vulnerable.js:13:20:13:28 | c.request | vulnerable.js:13:20:13:51 | c.reque ...  'true' | Whether this request gets validated depends on $@, which the client controls. | vulnerable.js:13:20:13:28 | c.request | request data |
+| vulnerable.js:13:20:13:51 | c.reque ...  'true' | vulnerable.js:13:20:13:34 | c.request.query | vulnerable.js:13:20:13:51 | c.reque ...  'true' | Whether this request gets validated depends on $@, which the client controls. | vulnerable.js:13:20:13:34 | c.request.query | request data |
+edges
+| vulnerable.js:7:26:7:36 | req.headers | vulnerable.js:7:26:7:58 | req.hea ... quest'] | provenance |  |
+| vulnerable.js:7:26:7:58 | req.hea ... quest'] | vulnerable.js:7:25:7:58 | !req.he ... quest'] | provenance | Config |
+| vulnerable.js:13:20:13:28 | c.request | vulnerable.js:13:20:13:40 | c.reque ... y.debug | provenance |  |
+| vulnerable.js:13:20:13:34 | c.request.query | vulnerable.js:13:20:13:40 | c.reque ... y.debug | provenance |  |
+| vulnerable.js:13:20:13:40 | c.reque ... y.debug | vulnerable.js:13:20:13:51 | c.reque ...  'true' | provenance | Config |
+nodes
+| vulnerable.js:7:25:7:58 | !req.he ... quest'] | semmle.label | !req.he ... quest'] |
+| vulnerable.js:7:26:7:36 | req.headers | semmle.label | req.headers |
+| vulnerable.js:7:26:7:58 | req.hea ... quest'] | semmle.label | req.hea ... quest'] |
+| vulnerable.js:13:20:13:28 | c.request | semmle.label | c.request |
+| vulnerable.js:13:20:13:34 | c.request.query | semmle.label | c.request.query |
+| vulnerable.js:13:20:13:40 | c.reque ... y.debug | semmle.label | c.reque ... y.debug |
+| vulnerable.js:13:20:13:51 | c.reque ...  'true' | semmle.label | c.reque ...  'true' |
+subpaths

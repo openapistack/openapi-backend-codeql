@@ -1,0 +1,7 @@
+name: openapistack/openapi-backend-queries
+version: 0.1.0
+description: CodeQL queries for insecure openapi-backend configuration and usage.
+license: MIT
+defaultSuiteFile: openapi-backend.qls
+dependencies:
+  codeql/javascript-all: "*"

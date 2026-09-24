@@ -1,0 +1,8 @@
+#select
+| vulnerable.js:12:50:12:83 | `./spec ... t}.yml` | vulnerable.js:12:61:12:77 | req.params.tenant | vulnerable.js:12:50:12:83 | `./spec ... t}.yml` | The OpenAPI definition is loaded from a location that $@ controls. | vulnerable.js:12:61:12:77 | req.params.tenant | user input |
+edges
+| vulnerable.js:12:61:12:77 | req.params.tenant | vulnerable.js:12:50:12:83 | `./spec ... t}.yml` | provenance |  |
+nodes
+| vulnerable.js:12:50:12:83 | `./spec ... t}.yml` | semmle.label | `./spec ... t}.yml` |
+| vulnerable.js:12:61:12:77 | req.params.tenant | semmle.label | req.params.tenant |
+subpaths

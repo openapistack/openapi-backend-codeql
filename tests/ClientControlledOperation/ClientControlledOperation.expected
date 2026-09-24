@@ -1,0 +1,10 @@
+#select
+| test.js:11:39:11:58 | req.body.operationId | test.js:11:39:11:46 | req.body | test.js:11:39:11:58 | req.body.operationId | $@ selects the operation for this definition lookup. | test.js:11:39:11:46 | req.body | User input |
+| test.js:20:83:20:91 | req.query | test.js:20:83:20:91 | req.query | test.js:20:83:20:91 | req.query | $@ selects the mock options for this definition lookup. | test.js:20:83:20:91 | req.query | User input |
+edges
+| test.js:11:39:11:46 | req.body | test.js:11:39:11:58 | req.body.operationId | provenance |  |
+nodes
+| test.js:11:39:11:46 | req.body | semmle.label | req.body |
+| test.js:11:39:11:58 | req.body.operationId | semmle.label | req.body.operationId |
+| test.js:20:83:20:91 | req.query | semmle.label | req.query |
+subpaths

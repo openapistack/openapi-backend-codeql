@@ -1,0 +1,2 @@
+query: src/ClientControlledValidation/ClientControlledValidation.ql
+postprocess: utils/InlineExpectationsTestQuery.ql

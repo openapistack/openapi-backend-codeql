@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: Users API
+  version: 1.0.0
+security:
+  - jwt: []
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      security: [] # public
+      responses:
+        '200': { description: ok }
+  /users/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: string } }
+    get:
+      operationId: getUser
+      responses:
+        '200': { description: ok }
+    delete:
+      operationId: deleteUser
+      responses:
+        '204': { description: deleted }
+components:
+  securitySchemes:
+    jwt: { type: http, scheme: bearer }

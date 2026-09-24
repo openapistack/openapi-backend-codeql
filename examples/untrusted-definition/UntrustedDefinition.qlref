@@ -1,0 +1,2 @@
+query: src/UntrustedDefinition/UntrustedDefinition.ql
+postprocess: utils/InlineExpectationsTestQuery.ql

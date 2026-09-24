@@ -1,0 +1,1 @@
+| test.js:4:5:4:18 | OpenAPIBackend | Security scheme 'basic' is $@ but has no registered security handler. | openapi.yaml:12:12:12:40 | { type: ... basic } | used in the definition |

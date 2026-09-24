@@ -1,0 +1,9 @@
+name: openapistack/openapi-backend-models
+version: 0.1.0
+library: true
+description: Models-as-data for openapi-backend. Marks context.request in handlers as remote user input for CodeQL's standard JavaScript queries.
+license: MIT
+extensionTargets:
+  codeql/javascript-all: "*"
+dataExtensions:
+  - "*.model.yml"

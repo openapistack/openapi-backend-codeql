@@ -2,5 +2,5 @@
 *.testproj/
 *.actual
 db/
-results.sarif
+*.sarif
 node_modules/

@@ -1,0 +1,1 @@
+| vulnerable.js:7:17:7:30 | OpenAPIBackend | Security scheme 'apiKey' is $@ but has no registered security handler. | openapi.yml:23:13:23:57 | { type: ... i-key } | used in the definition |

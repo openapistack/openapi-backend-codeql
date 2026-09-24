@@ -1,0 +1,24 @@
+openapi: 3.1.0
+info:
+  title: Reports API
+  version: 1.0.0
+security:
+  - jwt: []
+paths:
+  /reports:
+    get:
+      operationId: listReports
+      responses:
+        '200': { description: ok }
+  /reports/export:
+    post:
+      operationId: exportReports
+      security:
+        - apiKey: []
+      responses:
+        '202': { description: accepted }
+components:
+  securitySchemes:
+    jwt: { type: http, scheme: bearer }
+    apiKey: { type: apiKey, in: header, name: x-api-key }
+    legacyBasic: { type: http, scheme: basic } # declared but never used, so not flagged

@@ -1,0 +1,12 @@
+#select
+| vulnerable.js:10:57:10:78 | req.par ... ationId | vulnerable.js:10:57:10:78 | req.par ... ationId | vulnerable.js:10:57:10:78 | req.par ... ationId | $@ selects the operation for this definition lookup. | vulnerable.js:10:57:10:78 | req.par ... ationId | User input |
+| vulnerable.js:11:11:11:26 | req.query.status | vulnerable.js:11:11:11:26 | req.query.status | vulnerable.js:11:11:11:26 | req.query.status | $@ selects the 'code' option for this definition lookup. | vulnerable.js:11:11:11:26 | req.query.status | User input |
+| vulnerable.js:12:14:12:30 | req.query.example | vulnerable.js:12:14:12:30 | req.query.example | vulnerable.js:12:14:12:30 | req.query.example | $@ selects the 'example' option for this definition lookup. | vulnerable.js:12:14:12:30 | req.query.example | User input |
+| vulnerable.js:20:53:20:81 | req.hea ... on-id'] | vulnerable.js:20:53:20:81 | req.hea ... on-id'] | vulnerable.js:20:53:20:81 | req.hea ... on-id'] | $@ selects the operation for this definition lookup. | vulnerable.js:20:53:20:81 | req.hea ... on-id'] | User input |
+edges
+nodes
+| vulnerable.js:10:57:10:78 | req.par ... ationId | semmle.label | req.par ... ationId |
+| vulnerable.js:11:11:11:26 | req.query.status | semmle.label | req.query.status |
+| vulnerable.js:12:14:12:30 | req.query.example | semmle.label | req.query.example |
+| vulnerable.js:20:53:20:81 | req.hea ... on-id'] | semmle.label | req.hea ... on-id'] |
+subpaths

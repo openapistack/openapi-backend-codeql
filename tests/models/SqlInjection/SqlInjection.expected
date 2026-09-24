@@ -1,0 +1,34 @@
+#select
+| test.js:10:29:10:82 | `SELECT ... ms.id}` | test.js:10:62:10:70 | c.request | test.js:10:29:10:82 | `SELECT ... ms.id}` | This query string depends on a $@. | test.js:10:62:10:70 | c.request | user-provided value |
+| test.js:17:19:17:61 | `SELECT ... name}'` | test.js:16:20:16:28 | c.request | test.js:17:19:17:61 | `SELECT ... name}'` | This query string depends on a $@. | test.js:16:20:16:28 | c.request | user-provided value |
+| test.js:21:30:21:95 | `INSERT ... ame}')` | test.js:21:66:21:74 | c.request | test.js:21:30:21:95 | `INSERT ... ame}')` | This query string depends on a $@. | test.js:21:66:21:74 | c.request | user-provided value |
+| test.js:25:12:25:79 | `SELECT ... ey']}'` | test.js:25:47:25:55 | c.request | test.js:25:12:25:79 | `SELECT ... ey']}'` | This query string depends on a $@. | test.js:25:47:25:55 | c.request | user-provided value |
+| test.js:30:53:30:104 | `DELETE ... ms.id}` | test.js:30:84:30:92 | c.request | test.js:30:53:30:104 | `DELETE ... ms.id}` | This query string depends on a $@. | test.js:30:84:30:92 | c.request | user-provided value |
+| typed.ts:6:49:6:104 | `SELECT ... ms.id}` | typed.ts:6:84:6:92 | c.request | typed.ts:6:49:6:104 | `SELECT ... ms.id}` | This query string depends on a $@. | typed.ts:6:84:6:92 | c.request | user-provided value |
+edges
+| test.js:10:62:10:70 | c.request | test.js:10:29:10:82 | `SELECT ... ms.id}` | provenance |  |
+| test.js:16:9:16:16 | { name } | test.js:16:11:16:14 | name | provenance |  |
+| test.js:16:11:16:14 | name | test.js:17:55:17:58 | name | provenance |  |
+| test.js:16:20:16:28 | c.request | test.js:16:9:16:16 | { name } | provenance |  |
+| test.js:17:55:17:58 | name | test.js:17:19:17:61 | `SELECT ... name}'` | provenance |  |
+| test.js:21:66:21:74 | c.request | test.js:21:30:21:95 | `INSERT ... ame}')` | provenance |  |
+| test.js:25:47:25:55 | c.request | test.js:25:12:25:79 | `SELECT ... ey']}'` | provenance |  |
+| test.js:30:84:30:92 | c.request | test.js:30:53:30:104 | `DELETE ... ms.id}` | provenance |  |
+| typed.ts:6:84:6:92 | c.request | typed.ts:6:49:6:104 | `SELECT ... ms.id}` | provenance |  |
+nodes
+| test.js:10:29:10:82 | `SELECT ... ms.id}` | semmle.label | `SELECT ... ms.id}` |
+| test.js:10:62:10:70 | c.request | semmle.label | c.request |
+| test.js:16:9:16:16 | { name } | semmle.label | { name } |
+| test.js:16:11:16:14 | name | semmle.label | name |
+| test.js:16:20:16:28 | c.request | semmle.label | c.request |
+| test.js:17:19:17:61 | `SELECT ... name}'` | semmle.label | `SELECT ... name}'` |
+| test.js:17:55:17:58 | name | semmle.label | name |
+| test.js:21:30:21:95 | `INSERT ... ame}')` | semmle.label | `INSERT ... ame}')` |
+| test.js:21:66:21:74 | c.request | semmle.label | c.request |
+| test.js:25:12:25:79 | `SELECT ... ey']}'` | semmle.label | `SELECT ... ey']}'` |
+| test.js:25:47:25:55 | c.request | semmle.label | c.request |
+| test.js:30:53:30:104 | `DELETE ... ms.id}` | semmle.label | `DELETE ... ms.id}` |
+| test.js:30:84:30:92 | c.request | semmle.label | c.request |
+| typed.ts:6:49:6:104 | `SELECT ... ms.id}` | semmle.label | `SELECT ... ms.id}` |
+| typed.ts:6:84:6:92 | c.request | semmle.label | c.request |
+subpaths

@@ -1,0 +1,2 @@
+query: src/UnenforcedSecurity/UnenforcedSecurity.ql
+postprocess: utils/InlineExpectationsTestQuery.ql
