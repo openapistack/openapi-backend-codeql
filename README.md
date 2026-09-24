@@ -4,7 +4,6 @@
 
 [![CI](https://github.com/openapistack/openapi-backend-codeql/actions/workflows/ci.yml/badge.svg)](https://github.com/openapistack/openapi-backend-codeql/actions/workflows/ci.yml)
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/openapistack/openapi-backend-codeql/blob/main/LICENSE)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/openapistack/openapi-backend-codeql)
 [![Buy me a coffee](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-orange)](https://buymeacoff.ee/anttiviljami)
 
 <p align="center"><b>Find insecure openapi-backend setups with CodeQL.</b></p>
