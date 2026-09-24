@@ -23,9 +23,6 @@
 
 ## Quick Start
 
-> **Note:** The packs aren't published to the GitHub Container Registry yet. Until then, clone this repository and
-> pass `--additional-packs=path/to/openapi-backend-codeql` to the CodeQL CLI.
-
 Add both packs to your GitHub code scanning workflow:
 
 ```yaml
@@ -40,9 +37,9 @@ Add both packs to your GitHub code scanning workflow:
 Or run them with the [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli):
 
 ```
-codeql pack download openapistack/openapi-backend-queries openapistack/openapi-backend-models
 codeql database create db --language=javascript-typescript
 codeql database analyze db openapistack/openapi-backend-queries \
+  --download \
   --model-packs=openapistack/openapi-backend-models \
   --format=sarif-latest --output=results.sarif
 ```
