@@ -1,0 +1,31 @@
+name: False positive
+description: A query flagged code that is actually fine
+labels: [false-positive]
+body:
+  - type: input
+    id: query
+    attributes:
+      label: Query ID
+      placeholder: js/openapi-backend/unenforced-security
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Minimal code that triggers the alert
+      description: Strip it down to the smallest snippet that still gets flagged. Include the relevant part of your OpenAPI definition if the query reads it.
+      render: js
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why is this safe?
+      description: For example, where does enforcement happen instead?
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: openapi-backend-queries 0.1.0, CodeQL CLI 2.27.1, openapi-backend 5.21.1

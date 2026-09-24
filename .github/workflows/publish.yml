@@ -1,0 +1,53 @@
+name: Publish packs
+
+# Publishes both packs to the GitHub Container Registry when a release is published.
+# The release tag must match the version in queries/qlpack.yml and models/qlpack.yml, e.g. v0.1.0.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+env:
+  CODEQL_VERSION: 2.27.1
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    name: Publish to GHCR
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check the release tag matches the pack versions
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          for pack in queries models; do
+            version=$(sed -n 's/^version: *//p' "$pack/qlpack.yml")
+            if [ "v$version" != "$TAG" ]; then
+              echo "::error file=$pack/qlpack.yml::version $version does not match release tag $TAG"
+              exit 1
+            fi
+          done
+
+      - uses: ./.github/actions/setup-codeql
+        with:
+          version: ${{ env.CODEQL_VERSION }}
+
+      - name: Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          codeql pack publish models
+          codeql pack publish queries

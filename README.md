@@ -43,7 +43,7 @@ CI proves this on every run ([`examples/sql-injection`](examples/sql-injection))
 
 ```yaml
 # .github/workflows/codeql.yml
-- uses: github/codeql-action/init@v3
+- uses: github/codeql-action/init@v4
   with:
     languages: javascript-typescript
     packs: |
@@ -92,9 +92,9 @@ A query that cries wolf gets disabled, so every query here errs on the side of s
 - **Checks you delegate still count.** A check of `c.security.authorized` or `c.validation` in a helper the handler
   calls, in a `postSecurityHandler`, or in a `preOperationHandler` counts as enforcement.
 
-We run the queries against the 14 integration examples on openapi-backend's
-[`examples` branch](https://github.com/openapistack/openapi-backend/tree/examples). Zero alerts as shipped. Remove
-their `unauthorizedHandler`, and exactly the secured operations get flagged.
+CI runs the queries against the 14 integration examples on openapi-backend's
+[`examples` branch](https://github.com/openapistack/openapi-backend/tree/examples) on every push and fails on any
+alert. Zero alerts as shipped. Remove their `unauthorizedHandler`, and exactly the secured operations get flagged.
 
 ---
 
@@ -297,6 +297,8 @@ CI checks the markers in two independent ways ([`.github/workflows/ci.yml`](.git
    models pack, and CodeQL's built-in `js/sql-injection`. Then [`scripts/verify-sarif.mjs`](scripts/verify-sarif.mjs)
    checks the SARIF against the markers. A control run without the models pack confirms that the built-in query
    misses the SQL injection example on its own.
+3. **Real world.** CI analyzes openapi-backend's own integration examples, which are configured correctly, and fails
+   on any alert.
 
 ## Development
 
@@ -327,6 +329,14 @@ examples/<query-id>/                vulnerable.js, fixed.js, openapi.yml, with /
 tests/<Query>/                      edge cases: false positives we avoid, and setups we still catch
 scripts/verify-sarif.mjs            end-to-end check of SARIF against the markers
 ```
+
+## Releasing
+
+1. Bump `version` in `queries/qlpack.yml` and `models/qlpack.yml`, and update [`CHANGELOG.md`](CHANGELOG.md).
+2. Publish a GitHub release tagged `v<version>`.
+
+[`publish.yml`](.github/workflows/publish.yml) runs CI, checks that the tag matches both pack versions, and publishes
+both packs to the GitHub Container Registry.
 
 ## Contributing
 

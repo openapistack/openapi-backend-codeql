@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -17,7 +18,9 @@ jobs:
     name: Compile and unit test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: ./.github/actions/setup-codeql
         with:
@@ -43,7 +46,9 @@ jobs:
     name: Analyze examples end to end
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: ./.github/actions/setup-codeql
         with:
@@ -81,7 +86,46 @@ jobs:
 
       - name: Upload SARIF
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: examples-sarif
           path: '*.sarif'
+
+  # False positive guard: openapi-backend's own integration examples are configured correctly,
+  # so any alert on them is a false positive.
+  real-world:
+    name: No alerts on openapi-backend examples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: openapistack/openapi-backend
+          ref: examples
+          path: real-world
+          persist-credentials: false
+
+      - uses: ./.github/actions/setup-codeql
+        with:
+          version: ${{ env.CODEQL_VERSION }}
+
+      - name: Create database from the examples branch
+        run: codeql database create "$RUNNER_TEMP/db" --language=javascript-typescript --source-root=real-world
+
+      - name: Analyze
+        run: |
+          codeql database analyze "$RUNNER_TEMP/db" queries/openapi-backend.qls \
+            --model-packs=openapistack/openapi-backend-models \
+            --additional-packs=. \
+            --format=sarif-latest \
+            --output=real-world.sarif
+
+      - name: Check there are no alerts
+        run: |
+          jq -r '.runs[].results[] | "::error file=\(.locations[0].physicalLocation.artifactLocation.uri),line=\(.locations[0].physicalLocation.region.startLine)::[\(.ruleId)] \(.message.text)"' real-world.sarif
+          count=$(jq '[.runs[].results[]] | length' real-world.sarif)
+          echo "Alerts on openapi-backend examples: $count" >> "$GITHUB_STEP_SUMMARY"
+          test "$count" -eq 0

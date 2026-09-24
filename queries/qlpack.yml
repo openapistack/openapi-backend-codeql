@@ -4,4 +4,4 @@ description: CodeQL queries for insecure openapi-backend configuration and usage
 license: MIT
 defaultSuiteFile: openapi-backend.qls
 dependencies:
-  codeql/javascript-all: "*"
+  codeql/javascript-all: ^2.10.2
